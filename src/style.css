@@ -1,5 +1,10 @@
+body {
+    box-sizing: border-box;
+    margin: 0;
+}
+
 .wrapper {
-    max-width: 800px;
+    max-width: 875px;
     padding: 0 30px;
     margin: 0 auto;
 }
@@ -8,7 +13,7 @@
 .textarea {
     margin-top: 30px ;
     margin-bottom: 10px;
-    width: 800px;
+    width: 875px;
     height: 300px;
 }
 
@@ -16,6 +21,8 @@
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
+    border: 1px solid black;
+    padding: 5px 5px;
 }
 
 .k-button {
@@ -25,4 +32,38 @@
     width: 50px;
     height: 50px;
     border: 1px solid black;
+    cursor: pointer;
+    transition: .8s;
+}
+
+.k-button:hover {
+    background-color: burlywood;
+}
+
+.button-backspace {
+    width: 120px; 
+}
+
+.button-tab {
+    width: 56px;
+}
+
+.button-del {
+    width: 56px;
+}
+
+.button-capslk {
+    width: 113px;
+}
+
+.button-enter {
+    width: 113px; 
+}
+
+.button-shift {
+    width: 113px;
+}
+
+.button-space {
+    width: 404px;
 }
