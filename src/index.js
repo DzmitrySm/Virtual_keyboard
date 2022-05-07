@@ -63,11 +63,31 @@ function initEn() {
       output = `${output}<div class="k-button" >►</div>`;
       i += 1;
     }
-    output = `${output}<div class="k-button" >${keyboardSymbols[i]}</div>`;
+    output = `${output}<div class="k-button" data="${keyboardSymbols[i]}" >${keyboardSymbols[i]}</div>`;
   }
   keyboard.innerHTML = output;
 }
 initEn();
+
+// Button selected onkeydown
+
+document.onkeydown = function (event) {
+  document.querySelectorAll('.keyboard .k-button').forEach((el) => el.classList.remove('active-button'));
+  document.querySelector(`.keyboard .k-button[data="${event.key}"]`).classList.add('active-button');
+};
+
+// Button selected onkeyup
+document.onkeyup = function (event) {
+  document.querySelectorAll('.keyboard .k-button').forEach((el) => el.classList.remove('active-button'));
+}
+
+// Button selected onclick
+
+document.querySelectorAll('.keyboard .k-button').forEach((el) => el.onclick = function (event) {
+  document.querySelectorAll('.keyboard .k-button').forEach((elem) => elem.classList.remove('active-button'));
+  const code = this.getAttribute('data');
+  this.classList.add('active-button');
+});
 
 // Backspace
 function backspace() {
@@ -81,17 +101,36 @@ function backspace() {
 const BackspaceButton = document.querySelector('.button-backspace');
 BackspaceButton.addEventListener('click', backspace);
 
+// Capslock
+function capsLock() {
+  const allButtons = document.querySelectorAll('.k-button');
+  allButtons.forEach((el) => {
+    el.textContent = el.textContent.toUpperCase();
+  });
+}
+const CapsLockButton = document.querySelector('.button-capslk');
+CapsLockButton.addEventListener('click', capsLock);
+
 // Enter
 function enter() {
-
+  const textAreaValue = document.querySelector('.textarea').value;
 }
 
 // Tab
 function tab() {
-  const textAreaValue = document.querySelector('.textarea').value;
-  document.querySelector('.textarea').value = textAreaValue + '  ' ;
-
+  // const textAreaValue = document.querySelector('.textarea').value;
+  // document.querySelector('.textarea').value = `${textAreaValue}  `;
 }
 
 const TabButton = document.querySelector('.button-tab');
 TabButton.addEventListener('click', tab);
+// ClickButton
+function addLetter(el) {
+  const textAreaValue = document.querySelector('.textarea').value;
+  const text = '';
+  const tg = el.target;
+  const allButtons = document.querySelectorAll('.k-button');
+  textArea.textContent = tg.textContent;
+}
+
+keyboard.addEventListener('click', addLetter);

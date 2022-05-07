@@ -67,3 +67,10 @@ body {
 .button-space {
     width: 404px;
 }
+
+
+.active-button {
+    background-color: aquamarine;
+    border-radius: 9px;
+    transition: .3s;
+}
