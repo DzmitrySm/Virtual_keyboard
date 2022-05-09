@@ -245,7 +245,6 @@ document.onkeydown = function behaviour(event) {
   }
 };
 
-// ClickButton
 function addLetter(el) {
   const tg = el.target;
   if (el.target.textContent === 'Backspace' || el.target.textContent === 'Control' || el.target.textContent === 'Shift' || el.target.textContent === 'Tab' || el.target.textContent === 'CapsLock' || el.target.textContent === 'Delete' || el.target.textContent === 'Enter' || el.target.textContent === 'Alt' || el.target.textContent === 'Win') {
