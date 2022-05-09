@@ -34,6 +34,7 @@ body {
     border: 1px solid black;
     cursor: pointer;
     transition: .8s;
+
 }
 
 .k-button:hover {
@@ -73,4 +74,14 @@ body {
     background-color: aquamarine;
     border-radius: 9px;
     transition: .3s;
+}
+
+
+
+.paragraph-help {
+    text-align: center;
+}
+
+.paragraph-switch {
+    text-align: center; 
 }

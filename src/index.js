@@ -1,6 +1,6 @@
+/* global document */
 const keyboardSymbolsRu = ['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\', 'Delete', 'CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'Enter', 'Shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '/', 'ArrowUp', 'Shift', 'Control', 'Win', 'Alt', ' ', 'Alt', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'Control'];
 const keyboardSymbols = ['Dead', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'Delete', 'CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '"', 'Enter', 'Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', 'ArrowUp', 'Shift', 'Control', 'Win', 'Alt', ' ', 'Alt', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'Control'];
-
 const body = document.querySelector('body');
 const wrapper = document.createElement('div');
 wrapper.classList.add('wrapper');
@@ -13,6 +13,16 @@ wrapper.appendChild(textArea);
 const keyboard = document.createElement('div');
 keyboard.classList.add('keyboard');
 wrapper.appendChild(keyboard);
+
+const textAfterKeyboard = document.createElement('p');
+textAfterKeyboard.classList.add('paragraph-help');
+wrapper.appendChild(textAfterKeyboard);
+textAfterKeyboard.innerHTML = 'Клавиатура создана в операционной системе Windows';
+
+const switchLanguage = document.createElement('p');
+switchLanguage.classList.add('paragraph-switch');
+wrapper.appendChild(switchLanguage);
+switchLanguage.innerHTML = 'Для переключения языка комбинация: левыe ctrl + alt';
 
 function initEn() {
   let output = '';
@@ -121,31 +131,39 @@ function initRu() {
   keyboard.innerHTML = output;
 }
 
-
-
-//Translate
-
-  
-
+// Translate
+let flagDown = false;
+document.onkeydown = function trans(event) {
+  if (event.code === 'ControlLeft') {
+    flagDown = true;
+  } if (event.code === 'AltLeft' && flagDown) {
+    flagDown = false;
+  }
+};
 
 // Button selected onkeydown
 
-document.onkeydown = function (event) {
+document.onkeydown = function selectButton(event) {
   document.querySelectorAll('.keyboard .k-button').forEach((el) => el.classList.remove('active-button'));
   document.querySelector(`.keyboard .k-button[data="${event.key}"]`).classList.add('active-button');
 };
 
 // Button selected onkeyup
-document.onkeyup = function (event) {
+document.onkeyup = function delSelectButton() {
   document.querySelectorAll('.keyboard .k-button').forEach((el) => el.classList.remove('active-button'));
 };
 
 // Button selected onclick
 
-document.querySelectorAll('.keyboard .k-button').forEach((el) => el.onclick = function (event) {
-  document.querySelectorAll('.keyboard .k-button').forEach((elem) => elem.classList.remove('active-button'));
-  const code = this.getAttribute('data');
-  this.classList.add('active-button');
+document.querySelectorAll('.keyboard .k-button').forEach((ele) => {
+  ele.onclick = function click() {
+    document.querySelectorAll('.keyboard .k-button').forEach((elem) => {
+      elem.classList.remove('active-button');
+    });
+    const code = this.getAttribute('data');
+    console.log(code);
+    this.classList.add('active-button');
+  };
 });
 
 // Backspace
@@ -160,14 +178,13 @@ function backspace() {
 const BackspaceButton = document.querySelector('.button-backspace');
 BackspaceButton.addEventListener('click', backspace);
 
-//Delete
+// Delete
 function deleteF() {
   const textAreaValue = document.querySelector('.textarea').value;
   const inputLength = textAreaValue.length;
   const step = 1;
   const final = 0 + step;
   document.querySelector('.textarea').value = textAreaValue.slice(final, inputLength);
-
 }
 const DeleteButton = document.querySelector('.button-del');
 DeleteButton.addEventListener('click', deleteF);
@@ -187,7 +204,7 @@ function capsLockup() {
 function capsLocklow() {
   const allButtons = document.querySelectorAll('.k-button');
   allButtons.forEach((el) => {
-    if (el.textContent === 'Backspace' || el.textContent === 'Control' || el.textContent === 'Shift' || el.textContent === 'Tab' || el.textContent === 'CapsLock' || el.textContent === 'Delete' || el.textContent === 'Enter' || el.textContent === 'Alt' || el.textContent === 'Win') {
+    if (el.textContent === 'Backspace' || el.textContent === 'Backspace' || el.textContent === 'Control' || el.textContent === 'Shift' || el.textContent === 'Tab' || el.textContent === 'CapsLock' || el.textContent === 'Delete' || el.textContent === 'Enter' || el.textContent === 'Alt' || el.textContent === 'Win') {
       return;
     }
     el.textContent = el.textContent.toLowerCase();
@@ -204,34 +221,37 @@ CapsLockButton.addEventListener('click', () => {
     capsLockup();
   }
 });
-
-document.onkeydown = function (event) {
+let flagLang = false;
+document.onkeydown = function behaviour(event) {
+  document.querySelectorAll('.keyboard .k-button').forEach((el) => el.classList.remove('active-button'));
+  document.querySelector(`.keyboard .k-button[data="${event.key}"]`).classList.add('active-button');
+  if (event.code === 'ControlLeft') {
+    flagDown = true;
+  } if (event.code === 'AltLeft' && flagDown && !flagLang) {
+    flagDown = false;
+    flagLang = true;
+    initRu();
+  } if (event.code === 'AltLeft' && flagDown && flagLang) {
+    flagDown = false;
+    flagLang = false;
+    initEn();
+  }
   if (event.code === 'CapsLock' && flag) {
     flag = false;
     capsLocklow();
-  } else if(event.code === 'CapsLock' && !flag) {
+  } else if (event.code === 'CapsLock' && !flag) {
     flag = true;
     capsLockup();
   }
 };
 
-// Enter
-function enter() {
-  const textAreaValue = document.querySelector('.textarea').value;
-}
-
-// Tab
-function tab() {
-  // const textAreaValue = document.querySelector('.textarea').value;
-  // document.querySelector('.textarea').value = `${textAreaValue}  `;
-}
-
-const TabButton = document.querySelector('.button-tab');
-TabButton.addEventListener('click', tab);
 // ClickButton
 function addLetter(el) {
   const tg = el.target;
   if (el.target.textContent === 'Backspace' || el.target.textContent === 'Control' || el.target.textContent === 'Shift' || el.target.textContent === 'Tab' || el.target.textContent === 'CapsLock' || el.target.textContent === 'Delete' || el.target.textContent === 'Enter' || el.target.textContent === 'Alt' || el.target.textContent === 'Win') {
+    return;
+  }
+  if (el.target.className === 'keyboard') {
     return;
   }
   textArea.textContent += tg.textContent;
