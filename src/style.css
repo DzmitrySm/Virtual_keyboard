@@ -1,0 +1,87 @@
+body {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.wrapper {
+    max-width: 875px;
+    padding: 0 30px;
+    margin: 0 auto;
+}
+
+
+.textarea {
+    margin-top: 30px ;
+    margin-bottom: 10px;
+    width: 875px;
+    height: 300px;
+}
+
+.keyboard {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    border: 1px solid black;
+    padding: 5px 5px;
+}
+
+.k-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border: 1px solid black;
+    cursor: pointer;
+    transition: .8s;
+
+}
+
+.k-button:hover {
+    background-color: burlywood;
+}
+
+.button-backspace {
+    width: 120px; 
+}
+
+.button-tab {
+    width: 56px;
+}
+
+.button-del {
+    width: 56px;
+}
+
+.button-capslk {
+    width: 113px;
+}
+
+.button-enter {
+    width: 113px; 
+}
+
+.button-shift {
+    width: 113px;
+}
+
+.button-space {
+    width: 404px;
+}
+
+
+.active-button {
+    background-color: aquamarine;
+    border-radius: 9px;
+    transition: .3s;
+}
+
+
+
+.paragraph-help {
+    text-align: center;
+}
+
+.paragraph-switch {
+    text-align: center; 
+}
